@@ -9,9 +9,13 @@
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description 
-Use the Genesis theme framework assistant to see how Genesis hooks and filters
-are used to generate the web page.
+Use the Genesis theme framework assistant to see how Genesis hooks and filters are used to generate the web page.
 
+This information should help you to determine which hooks you need to change to make the page display what you
+want it to display.
+
+Genesistant also contains some logic that enables you to use functionality from the oik suite of plugins.
+e.g. the virtual field "no_title" which can be used to hide the display of a title.
 
 
 ## Installation 
@@ -19,6 +23,10 @@ are used to generate the web page.
 1. Activate the genesistant plugin through the 'Plugins' menu in WordPress
 
 ## Frequently Asked Questions 
+# What is the format of the output? 
+# What if I'm not using the Genesis theme framework? 
+# How do I change my code? 
+
 
 ## Screenshots 
 1. genesistant in action

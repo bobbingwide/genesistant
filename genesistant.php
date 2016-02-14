@@ -34,10 +34,19 @@ genesistant_loaded();
 /**
  * Function to invoke when genesistant is loaded
  *
+ * Whether or not we start genesistant processing depends on the 
+ * the constant GENESISTANT
+ * 
+ * Constant | Value | Processing
+ * -------- | ----- | --------------
+ * not defined | n/a | Trace all genesis hooks
+ * defined  | true  | Trace all genesis hooks
+ * defined  | false | Don't trace genesis hooks
+ *
  */
 function genesistant_loaded() {
 	add_action( "oik_fields_loaded", "genesistant_oik_fields_loaded" );
-	if ( defined( "GENESISTANT" ) && GENESISTANT ) {
+	if ( !defined( "GENESISTANT" ) || GENESISTANT !== false ) {
   	add_action( "all", "genesistant_all", 10, 2 );
 	}
 }	
@@ -50,7 +59,8 @@ function genesistant_loaded() {
  * 
  * Notes:
  * - it's not safe to produce HTML comments before the doctype tag has been created
- * - we're only interested hooks prefixed 'genesis_'
+ * - we're really only interested in hooks prefixed 'genesis_'
+ * - but there are some others that are of great interest too
  *
  * @param string $tag the action hook or filter
  * @param mixed $args parameters? 
@@ -61,24 +71,16 @@ function genesistant_all( $tag, $args2=null ) {
 		if ( 0 === strpos( $tag, "genesis_" ) ) {
 			$hooked = genesistant_get_hooks( $tag );
 			genesistant_safe_e_c( $tag, $hooked );
-		}
-		if ( 0 === strpos( $tag, "the_excerpt" ) ) {
+		} elseif ( 0 === strpos( $tag, "the_excerpt" ) ) {
+			$hooked = genesistant_get_hooks( $tag );
+			genesistant_safe_e_c( $tag, $hooked );
+		} elseif ( 0 === strpos( $tag, "the_content" ) ) {
+			$hooked = genesistant_get_hooks( $tag );
+			genesistant_safe_e_c( $tag, $hooked );
+		} elseif ( 0 === strpos( $tag, "the_permalink" ) ) {
 			$hooked = genesistant_get_hooks( $tag );
 			genesistant_safe_e_c( $tag, $hooked );
 		}
-		
-		if ( 0 === strpos( $tag, "the_content" ) ) {
-			$hooked = genesistant_get_hooks( $tag );
-			genesistant_safe_e_c( $tag, $hooked );
-		}
-		
-		if ( 0 === strpos( $tag, "the_permalink" ) ) {
-			$hooked = genesistant_get_hooks( $tag );
-			genesistant_safe_e_c( $tag, $hooked );
-			//bw_trace2( $hooked, $tag );
-			//bw_backtrace();
-		}
-		
 	} else {
 		if ( "genesis_doctype" === $tag ) {
 			$ok_to_e_c = true;
@@ -88,6 +90,13 @@ function genesistant_all( $tag, $args2=null ) {
 
 /**
  * Only echo comments when safe
+ *
+ * If we're processing a filter it's not safe to echo anything
+ * so we defer the output until it's an action
+ * There could be quite a lot of deferred output.
+ * 
+ * @param string $tag the hook name
+ * @param string $hooked information about attached hooks 
  */
 function genesistant_safe_e_c( $tag, $hooked ) {
 	static $deferred = null;
@@ -108,6 +117,11 @@ function genesistant_safe_e_c( $tag, $hooked ) {
 /** 
  * Return the hook type
  * 
+ * This relies on the $wp_actions array being incremented right at the start of do_action() and do_action_ref_array()
+ * BUT not to be called for apply_filters() and  apply_filters_ref_array()
+ *
+ * @param string $hook
+ * @return string "action" or "filter" 
  */ 
 function genesistant_trace_get_hook_type( $hook ) {
 	global $wp_actions;
