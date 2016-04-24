@@ -3,7 +3,7 @@
 Plugin Name: genesistant
 Plugin URI: http://www.oik-plugins.com/oik-plugins/genesistant
 Description: Genesis theme framework assistant 
-Version: 0.0.0
+Version: 0.0.1
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: genesistant
