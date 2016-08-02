@@ -3,7 +3,7 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: Genesis, hooks, filters, actions
 Requires at least: 4.3
-Tested up to: 4.5
+Tested up to: 4.6-beta4
 Stable tag: 0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -26,20 +26,16 @@ e.g. the virtual field "no_title" which can be used to hide the display of a tit
 
 == Frequently Asked Questions ==
 = What is the format of the output? =
-tbc
 
-= What if I'm not using the Genesis theme framework? =
-tbc
+See (Genesistant FAQs)](http://www.oik-plugins.com/oik-faq/what-is-the-format-of-the-output) 
 
-= How do I change my code? =
-tbc
 
 == Screenshots ==
 1. genesistant in action (slanted for the banner image)
 
 == Upgrade Notice ==
 = 0.0.1 = 
-Some minor tidying. Tested with WordPress 4.5
+Some minor tidying. Tested with WordPress 4.5.3 and 4.6-beta4
 
 = 0.0.0 =
 New plugin, available from GitHub and oik-plugins.
